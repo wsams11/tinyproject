@@ -1,15 +1,26 @@
 // check for indexedDB browser support
 
 let db;
+const request = window.indexedDB.open("budget", 1)
 // create a new db request for a "budget" database.
 
 request.onupgradeneeded = function(event) {
   // create object store called "pending" and set autoIncrement to true
+  const db = event.target.result;
+
+  const pendingStore = db.createObjectStore("pending", {
+    autoIncrement: true 
+  });
+  pendingStore.createIndex("transactionIndex", "transaction")
 };
 
 request.onsuccess = function(event) {
-  db = target.result;
+  const db = event.target.result;
+  const transaction = db.transaction(["pending"], "readwrite");
+  const pendingStore = transaction.objectStore("pending");
+  const transactionIndex = pendingStore.index("transaction")
 
+  
   if (navigator.onLine) {
     checkDatabase();
   }
