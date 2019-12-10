@@ -1,6 +1,7 @@
 // check for indexedDB browser support
 
 let db;
+const
 // create a new db request for a "budget" database.
 
 request.onupgradeneeded = function(event) {
